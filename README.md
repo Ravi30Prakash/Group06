@@ -1,22 +1,13 @@
 # Group06
-Flow Chart:
-1. Start
-2. Initialize Tiva TM4C
-  Set clock and configure GPIO pins.
-3. Initialize SD Card
-  Check if the SD card is detected.
-  If successful, proceed; if not, display error and restart.
-4. Initialize Sensors
-  Check if sensors are operational.
-  If successful, proceed; if not, display error and halt.
-5. Data Collection Loop:
-  Read data from sensors.
-  Format data for storage (e.g., CSV).
-  Write formatted data to a specified location on the SD card.
-  Wait for a specified interval before the next reading.
-6. Check for Stop Condition
-  If stop condition is met, proceed to end.
-  Otherwise, repeat from step 5.
-7. End:
-  Close the file on the SD card.
-  Power down the system safely.
+Project name: SD Card Datalogger
+
+Aim: To study about SD card data management and storing a string of data in a continious data locations,
+     which can be used for data logging purpose. 
+
+Flow Chart (Program Flow):
+
+    1. Initialize clock and configure GPIO pins for SPI and input button switch
+	2. Wait for button switch press
+    3. If button press detected Initia1ize SD Card and erase the SD card
+    4. Write a small string (eg: abcdefg) of data into the SD card in continious data location (not using any file format)
+    5. wait for next button press, if pressed repeat from step 3
