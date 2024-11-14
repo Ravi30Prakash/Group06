@@ -76,6 +76,23 @@ void GPIO_PortA_Initialisation(void){
 
 }
 
+void modify(void){
+    GPIO_PORTA_AMSEL_R &= ~0xFC;          // disable analog functionality on PA2,3,4,5
+    SSI0_CR1_R&=~SSI_CR1_SSE;             // Disable SSI while configuring it
+    SSI0_CR1_R&=~SSI_CR1_MS;              // Set as Master
+    SSI0_CC_R|=SSI_CC_CS_M;               // Configure clock source
+    SSI0_CC_R|=SSI_CC_CS_SYSPLL;          // Configure clock source
+    SSI0_CC_R|=SSI_CPSR_CPSDVSR_M;        // Configure prescale divisor
+    SSI0_CPSR_R = (SSI0_CPSR_R&~SSI_CPSR_CPSDVSR_M)+10; // must be even number
+    SSI0_CR0_R |=0x0300;
+    SSI0_CR0_R &= ~(SSI_CR0_SPH | SSI_CR0_SPO);
+    SSI0_CR0_R = (SSI0_CR0_R&~SSI_CR0_FRF_M)+SSI_CR0_FRF_MOTO;
+                                            // DSS = 8-bit data
+    SSI0_CR0_R = (SSI0_CR0_R&~SSI_CR0_DSS_M)+SSI_CR0_DSS_8;
+    SSI0_CR1_R|=SSI_CR1_SSE;          // 3)Enable SSI
+}
+
+
 void SPI_0_Initialisation(void){
 
     SYSCTL_RCGCSSI_R |= SYSCTL_RCGCSSI_R0;  // Enable clock for SPI(0) module
