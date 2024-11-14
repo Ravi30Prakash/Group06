@@ -107,6 +107,14 @@ void SPI_0_Initialisation(void){
 
 }
 
+void SysTick_Delay_1mS(unsigned long delay){ // no of 1 mS
+  unsigned long i;
+  for(i=0; i<delay; i++){
+      while((NVIC_ST_CTRL_R&0x00010000)==0){ // wait for count flag
+      }
+  }
+}
+
 void SPI_Transmit(uint8_t data) {
 
     while ((SSI0_SR_R & SSI_SR_TNF) == 0) GPIO_PORTF_DATA_R |= RED_LED;   // Wait until there's space in FIFO
@@ -151,6 +159,7 @@ void SD_Card_Present(void) {
 
 void main(void){
 
+    SysTick_Initialisation();
     GPIO_PortF_Initialisation();
     GPIO_PortF_Interrupt_Initialisation();
     GPIO_PortA_Initialisation();
