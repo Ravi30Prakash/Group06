@@ -32,7 +32,11 @@ void GPIO_PortF_Interrupt_Handler(void)
 
     if(GPIO_PORTF_MIS_R == 0x01){           // Interrupt from SW2
         GPIO_PORTF_DATA_R ^= RED_LED;       // Toggle data in PF1 (red led)
+<<<<<<< HEAD
         button_Send = 1;                    // To start SD data sending, enable bit
+=======
+        SD_Card_Present();
+>>>>>>> 3263ac3bf4287ef386ed86c55f6296dfd5466fac
     }
 
     GPIO_PORTF_ICR_R = 0x11;                // Interrupt clear, 1-clear all prior interrupts (PF7-PF0 = 00010001)
