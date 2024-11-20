@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include "tm4c123gh6pm.h"
 #include "definitions.h"
+bool button_Send = 0;
 
 void GPIO_PortF_Interrupt_Initialisation(void){
 
@@ -19,5 +20,30 @@ void GPIO_PortF_Interrupt_Initialisation(void){
 
      //__asm("    cpsie i");                // Global interrupt enable
 
+}
+
+// Interrupt Handlers
+
+void GPIO_PortF_Interrupt_Handler(void)
+{
+    if(GPIO_PORTF_MIS_R == 0x10){           // Interrupt from SW1
+        GPIO_PORTF_DATA_R ^= GREEN_LED;     // Toggle data in PF1 (green led)
+    }
+
+    if(GPIO_PORTF_MIS_R == 0x01){           // Interrupt from SW2
+        GPIO_PORTF_DATA_R ^= RED_LED;       // Toggle data in PF1 (red led)
+        button_Send = 1;                    // To start SD data sending, enable bit
+    }
+
+    GPIO_PORTF_ICR_R = 0x11;                // Interrupt clear, 1-clear all prior interrupts (PF7-PF0 = 00010001)
+}
+
+// Other functions
+
+void SysTick_Initialisation(void){
+  NVIC_ST_CTRL_R = 0;               // disable SysTick during setup
+  NVIC_ST_RELOAD_R = 15999;         // number of counts to wait, 1 mS
+  NVIC_ST_CURRENT_R = 0;            // clears current value register
+  NVIC_ST_CTRL_R = 0x00000005;      // enable SysTick with core clock
 }
 
