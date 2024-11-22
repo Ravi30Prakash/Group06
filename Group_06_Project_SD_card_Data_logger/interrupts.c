@@ -2,7 +2,9 @@
 #include <stdbool.h>
 #include "tm4c123gh6pm.h"
 #include "definitions.h"
-bool button_Send = 0;
+
+bool switch_1 = 0;
+bool switch_2 = 0;
 
 void GPIO_PortF_Interrupt_Initialisation(void){
 
@@ -27,16 +29,13 @@ void GPIO_PortF_Interrupt_Initialisation(void){
 void GPIO_PortF_Interrupt_Handler(void)
 {
     if(GPIO_PORTF_MIS_R == 0x10){           // Interrupt from SW1
-        GPIO_PORTF_DATA_R ^= GREEN_LED;     // Toggle data in PF1 (green led)
+
+        switch_1 = 1;                       // Switch 1 press flag
     }
 
     if(GPIO_PORTF_MIS_R == 0x01){           // Interrupt from SW2
-        GPIO_PORTF_DATA_R ^= RED_LED;       // Toggle data in PF1 (red led)
-<<<<<<< HEAD
-        button_Send = 1;                    // To start SD data sending, enable bit
-=======
-        SD_Card_Present();
->>>>>>> 3263ac3bf4287ef386ed86c55f6296dfd5466fac
+
+        switch_2 = 1;                       // Switch 2 press flag
     }
 
     GPIO_PORTF_ICR_R = 0x11;                // Interrupt clear, 1-clear all prior interrupts (PF7-PF0 = 00010001)
