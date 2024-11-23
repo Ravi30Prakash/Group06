@@ -2,16 +2,8 @@
 //green led: stuck in rx while loop
 //bue led: sd card status and working branch indication
 
-//red led: stuck in tx while loop
-//green led: stuck in rx while loop
-//bue led: sd card status and working branch indication
-
 // SPI(0) pin connections: PA2:-SCK(0) PA3:-CS(0) PA4:-MISO(0) PA5:-MOSI(0)
 // SPI(2) pin connections: PB4:-SCK(2) PB5:-CS(2) PB6:-MISO(2) PB7:-MOSI(2)
-<<<<<<< HEAD
-=======
-
->>>>>>> e555a295cc87964e7d0f4453e875523e60a3fc00
 
 // ********************************************///////////****************************************************//
 
@@ -19,14 +11,6 @@
 #include <stdbool.h>
 #include "tm4c123gh6pm.h"
 #include "definitions.h"
-<<<<<<< HEAD
-=======
-
-bool switchEnable = 0;
-int option = 0;
-
-<<<<<<< HEAD
->>>>>>> e555a295cc87964e7d0f4453e875523e60a3fc00
 
 bool switchEnable = 0;
 int option = 0;
@@ -39,10 +23,6 @@ void main(void){
     GPIO_PortF_Initialisation();
     GPIO_PortF_Interrupt_Initialisation();
     GPIO_PortA_Initialisation();
-<<<<<<< HEAD
-=======
-    //modify();
->>>>>>> e555a295cc87964e7d0f4453e875523e60a3fc00
     GPIO_PortB_Initialisation();
     SPI_2_Initialisation();
     UART0_Initialisation();
@@ -55,12 +35,8 @@ void main(void){
     }
     else UART0_Println("SD initialisation failed");
 
+    while(1){
 
-<<<<<<< HEAD
-=======
-        while(1){
-
->>>>>>> e555a295cc87964e7d0f4453e875523e60a3fc00
         if(switch_1){
 
             SysTick_Delay_1mS(100);
